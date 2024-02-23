@@ -6,10 +6,23 @@ services:
       dockerfile: ./apps/reservations/Dockerfile
       target: development
     env_file:
-      - ".env"
+      - "./apps/reservations/.env"
     command: pnpm run start:dev reservations
     ports:
-      - '3001:3000'
+      - '3001:3001'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  auth:
+    build:
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    env_file:
+      - "./apps/auth/.env"
+    command: pnpm run start:dev auth
+    ports:
+      - '3002:3002'
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
