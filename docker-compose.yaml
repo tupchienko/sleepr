@@ -6,13 +6,29 @@ services:
       dockerfile: ./apps/reservations/Dockerfile
       target: development
     env_file:
-      - ".env"
+      - "./apps/reservations/.env"
     command: pnpm run start:dev reservations
     ports:
-      - '3001:3000'
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - '3001:3001'
+
+  auth:
+    build:
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    env_file:
+      - "./apps/auth/.env"
+    command: pnpm run start:dev auth
+    ports:
+      - '3002:3002'
+
 
   mongo:
     image: mongo
+    ports:
+      - "27016:27017"
+    volumes:
+      - mongo-data:/data/db
+
+
+volumes:
+  mongo-data:
