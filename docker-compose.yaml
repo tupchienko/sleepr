@@ -21,6 +21,16 @@ services:
     ports:
       - '3002:3002'
 
+  payments:
+    build:
+      dockerfile: ./apps/payments/Dockerfile
+      target: development
+    env_file:
+      - "./apps/payments/.env"
+    command: pnpm run start:dev payments
+    ports:
+      - '3004:3004'
+
 
   mongo:
     image: mongo
